@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="注：宿主环境为win8，ubuntu安装在vmware虚拟机里。观看兄弟连linux视频课程后特做记录。   添加硬盘在ubuntu系统断电（关机）状态下添加新硬盘。 查看硬盘状况 sudo fdisk -l    注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等 使用fdisk命令分区，例如为/dev/sdb分区 su">
+<meta name="description" content="添加硬盘在ubuntu系统断电（关机）状态下添加新硬盘；或在虚拟机软件中添加新的磁盘。 查看硬盘状况 sudo fdisk -l    注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等 使用fdisk命令分区，例如为/dev/sdb分区 sudo fdisk /dev/sdb  回车进入分区命令输入m查看fdisk分区工">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何在Ubuntu中挂载新的硬盘，分区，自动挂载以及设置权限">
 <meta property="og:url" content="http://yoursite.com/2018/05/19/mount-new-disk-on-ubuntu/index.html">
 <meta property="og:site_name" content="MyDonne&#39;s Space">
-<meta property="og:description" content="注：宿主环境为win8，ubuntu安装在vmware虚拟机里。观看兄弟连linux视频课程后特做记录。   添加硬盘在ubuntu系统断电（关机）状态下添加新硬盘。 查看硬盘状况 sudo fdisk -l    注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等 使用fdisk命令分区，例如为/dev/sdb分区 su">
+<meta property="og:description" content="添加硬盘在ubuntu系统断电（关机）状态下添加新硬盘；或在虚拟机软件中添加新的磁盘。 查看硬盘状况 sudo fdisk -l    注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等 使用fdisk命令分区，例如为/dev/sdb分区 sudo fdisk /dev/sdb  回车进入分区命令输入m查看fdisk分区工">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-19T09:02:18.926Z">
+<meta property="og:updated_time" content="2018-05-19T09:05:15.964Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在Ubuntu中挂载新的硬盘，分区，自动挂载以及设置权限">
-<meta name="twitter:description" content="注：宿主环境为win8，ubuntu安装在vmware虚拟机里。观看兄弟连linux视频课程后特做记录。   添加硬盘在ubuntu系统断电（关机）状态下添加新硬盘。 查看硬盘状况 sudo fdisk -l    注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等 使用fdisk命令分区，例如为/dev/sdb分区 su">
+<meta name="twitter:description" content="添加硬盘在ubuntu系统断电（关机）状态下添加新硬盘；或在虚拟机软件中添加新的磁盘。 查看硬盘状况 sudo fdisk -l    注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等 使用fdisk命令分区，例如为/dev/sdb分区 sudo fdisk /dev/sdb  回车进入分区命令输入m查看fdisk分区工">
 
 
 
@@ -300,8 +300,7 @@
       
 
       
-        <p><em>注：宿主环境为win8，ubuntu安装在vmware虚拟机里。观看兄弟连linux视频课程后特做记录。</em>  </p>
-<h1 id="添加硬盘"><a href="#添加硬盘" class="headerlink" title="添加硬盘"></a>添加硬盘</h1><p>在ubuntu系统断电（关机）状态下添加新硬盘。</p>
+        <h1 id="添加硬盘"><a href="#添加硬盘" class="headerlink" title="添加硬盘"></a>添加硬盘</h1><p>在ubuntu系统断电（关机）状态下添加新硬盘；或在虚拟机软件中添加新的磁盘。</p>
 <h1 id="查看硬盘状况"><a href="#查看硬盘状况" class="headerlink" title="查看硬盘状况"></a>查看硬盘状况</h1><blockquote>
 <p>sudo fdisk -l  </p>
 </blockquote>
