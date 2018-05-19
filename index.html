@@ -229,6 +229,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/19/mount-new-disk-on-ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Donne Hu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MyDonne's Space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/19/mount-new-disk-on-ubuntu/" itemprop="url">如何在Ubuntu中挂载新的硬盘，分区，自动挂载以及设置权限</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-19T16:44:14+08:00">
+                2018-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><em>注：宿主环境为win8，ubuntu安装在vmware虚拟机里。观看兄弟连linux视频课程后特做记录。</em>  </p>
+<h1 id="添加硬盘"><a href="#添加硬盘" class="headerlink" title="添加硬盘"></a>添加硬盘</h1><p>在ubuntu系统断电（关机）状态下添加新硬盘。</p>
+<h1 id="查看硬盘状况"><a href="#查看硬盘状况" class="headerlink" title="查看硬盘状况"></a>查看硬盘状况</h1><blockquote>
+<p>sudo fdisk -l  </p>
+</blockquote>
+<p>注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等</p>
+<h1 id="使用fdisk命令分区，例如为-dev-sdb分区"><a href="#使用fdisk命令分区，例如为-dev-sdb分区" class="headerlink" title="使用fdisk命令分区，例如为/dev/sdb分区"></a>使用fdisk命令分区，例如为/dev/sdb分区</h1><blockquote>
+<p>sudo fdisk /dev/sdb</p>
+</blockquote>
+<p>回车进入分区命令<br>输入m查看fdisk分区工具选项<br>输入n开始分区<br>可以选择p（主分区）或e（扩展分区）等创建好扩展分区后就可以看到逻辑分区选项。根据提示输入盘符号（按提示的输入或直接回车），分区大小等信息。<br>可以多次执行n操作创建多个分区，创建好后输入w保存退出。<br>执行partprobe重新读取整个分区表。</p>
+<h1 id="格式化分区"><a href="#格式化分区" class="headerlink" title="格式化分区"></a>格式化分区</h1><blockquote>
+<p>sudo mkfs -t ext4 /dev/sdb1<br>注意不能格式化扩展分区</p>
+</blockquote>
+<h1 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h1><p>创建挂载点，就是新建一个目录</p>
+<blockquote>
+<p>mkdir ~/disk1<br>mkdir ~/disk2</p>
+</blockquote>
+<p>挂载</p>
+<blockquote>
+<p>sudo mount /dev/sdb1 ~/disk1<br>sudo mount /dev/sdb5 ~/disk2</p>
+</blockquote>
+<p>输入mount命令查看是否挂载成功，如果成功会看到如下信息<br><strong>/dev/sdb1 on /home/lgd/disk1 type ext4 (rw)</strong><br>也可以使用df命令查看是否挂载成功</p>
+<h1 id="自动挂载"><a href="#自动挂载" class="headerlink" title="自动挂载"></a>自动挂载</h1><p>修改/etc/fstab文件实现自动挂载，添加如下信息：  </p>
+<blockquote>
+<p>UUID=b543f8f7-579c-45b5-96d6-31de6fa1a55e /home/lgd/disk1 ext4 defaults 1 2  </p>
+</blockquote>
+<p>共6个字段分别代表</p>
+<ol>
+<li>分区设备文件名或UUID</li>
+<li>挂载点</li>
+<li>文件系统名称</li>
+<li>挂载参数，挂载权限</li>
+<li>指定分区是否被dump备份，0代表不备份，1代表每天备份，2代表不定期备份。</li>
+<li>指定分区是否被fsck检测，0代表不检测，其他数字代表检测的优先级，比如1的优先级比2高。根目录所在的分区的优先级为1，其他分区的优先级为大于或等于2  </li>
+</ol>
+<h3 id="以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入："><a href="#以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入：" class="headerlink" title="以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入："></a>以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入：</h3><blockquote>
+<p>sudo gedit /etc/fstab</p>
+</blockquote>
+<p>添加完信息保存后，执行命令：</p>
+<blockquote>
+<p>sudo mount -a</p>
+</blockquote>
+<p>如果没有报错就证明配制好了。</p>
+<p>修复由/etc/fstab文件配制错误引起的系统不能启动问题<br>启动后根据提示按 m 进入root命令行页面，更改/etc/fstab文件，然后重新启动。如果不能修改/etc/fstab文件，可能是根分区挂载权限问题，可使用 mount -o remount,rw / 重新挂载根分区，其中rw代表读写权限。修改好后，重启完成修复。</p>
+<h1 id="挂载完毕后的权限设置"><a href="#挂载完毕后的权限设置" class="headerlink" title="挂载完毕后的权限设置"></a>挂载完毕后的权限设置</h1><blockquote>
+<p>sudo chmod -R 777 ~/disk2</p>
+</blockquote>
+<p>作者：不喜欢吃鱼<br>链接：<a href="https://www.jianshu.com/p/ec5579ef15a6" target="_blank" rel="noopener">https://www.jianshu.com/p/ec5579ef15a6</a><br>來源：简书</p>
+<p>经过修订</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -344,741 +512,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2005/06/29/huangshan2005/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Donne Hu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyDonne's Space">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2005/06/29/huangshan2005/" itemprop="url">黄山游记--难忘的毕业旅行</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2005-06-29T20:16:40+08:00">
-                2005-06-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原本应该早一些记录这次旅行的,因为它太美妙,太值得回忆了,同样也够累的.<br>记得大一大二的时候一直期待着将来毕业了要进行一次毕业旅行,想不到竟能实现当初的想法,这都要感谢两个班长小皓和熊猫.<br>五岳归来不看山,黄山归来不看岳…此一说法确实有理,黄山真是天公的造化之物,俺的相机从来没有这样叫得欢过…   </p>
-<p>一行20余人,那是大学里的最后一次集体行动.欢喜啊…  </p>
-<p>虽然回来后似乎腿都断了,但大家心里都喜滋滋的.<br>欢喜之余,分别的感伤似乎更深了!从来没有那样地舍不得大家,虽然没有表现出来,但是心里万分地伤感啊!希望每位同学都有个美妙的未来吧!!!  </p>
-<p>500多兆的照片是我这一生中的财富,我会珍藏,挑选了一些放在这里,作为纪念…  </p>
-<p>感谢游黄山的每位同学,是你们造就了这次美妙的旅行!  </p>
-<p>胡晓东(东哥),褚煜琴(美女),何其华(何催),陈邹颖,陈光村(阿贱),陈哲皓(小皓),徐杨法(阿法),施立翔(阿牛,北京赶来),许峰(丰丰),胡剑泽(剑泽),王文芳(芳姐2),徐银芳(芳姐),王月娥(小月),盛仲英(老大),张伟俊(伪军),洪新华(阿花),周建鹏(煎包),吴尉(驴),施武乐(56),徐伟(伟哥),张迎(yin贼),施剑锋(熊),王轶峰(丰丰),付杰(阿福),沈坚立(坚坚),黄昔贤(流氓),倪官良(官良)  </p>
-<p><img src="/2005/06/29/huangshan2005/pic.jpg" alt="">  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2005/06/02/快毕业了/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Donne Hu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyDonne's Space">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2005/06/02/快毕业了/" itemprop="url">快毕业了</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2005-06-02T19:37:14+08:00">
-                2005-06-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今日之前都还没有毕业的感觉  </p>
-<p>下午大家聚在一起排毕业照的那一刻才意识到，我们真的快要分开了。。。  </p>
-<p>下午好几架相机轮番扫射，好像留下了许多美好的瞬间  </p>
-<p>我自己也保留了其中的一份，愿意与大家一起分享  </p>
-<p>请看相册——毕业了。。。  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2005/05/17/我的24岁生日/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Donne Hu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyDonne's Space">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2005/05/17/我的24岁生日/" itemprop="url">我的24岁生日</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2005-05-17T21:48:54+08:00">
-                2005-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天是我24岁的生日，我淋了场雨。<br>这场雨让我又长大了一岁。  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2005/04/09/你的成功在于你每天养成的习惯/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Donne Hu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyDonne's Space">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2005/04/09/你的成功在于你每天养成的习惯/" itemprop="url">你的成功在于你每天养成的习惯</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2005-04-09T11:42:51+08:00">
-                2005-04-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、不说”不可能”；</p>
-<p>2、凡事第一反应： 找方法，不找借口；</p>
-<p>3、遇到挫折对自己说声：太好了，机会来了；</p>
-<p>4、不说消极的话，不落入消极的情绪，一旦发生立即正面处理；</p>
-<p>5、凡事先订立目标；</p>
-<p>6、行动前，预先做计划；</p>
-<p>7、工作时间，每一分、每一秒做有利于生产的事情；</p>
-<p>8、随时用零碎的时间做零碎的事情；</p>
-<p>9、守时；</p>
-<p>10、写点日记，不要太依*记忆；</p>
-<p>11、随时记录想到的灵感；</p>
-<p>12、把重要的观念、方法写下来，随时提示自己；</p>
-<p>13、走路比平时快30%，肢体语言健康有力，不懒散、萎靡；</p>
-<p>14、每天出门照镜子，给自己一个自信的微笑；</p>
-<p>15、每天自我反省一次；</p>
-<p>16、每天坚持一次运动；</p>
-<p>17、听心跳一分钟，在做重要的事情，疲劳时，紧张时，烦躁时。。。。</p>
-<p>18、开会做前排；</p>
-<p>19、微笑；</p>
-<p>20、用心倾听，不打断对方的话；</p>
-<p>21、说话有力，感觉自己的声音能产生感染力的磁场；</p>
-<p>22、说话之前，先考虑一下对方的感觉；</p>
-<p>23、每天有意识赞美别人三次以上；</p>
-<p>24、即使表示感谢，如果别人帮助了你的话；</p>
-<p>25、控制住不要让自己作出为自己辩护的第一反应；</p>
-<p>26、不用训斥、指责的口吻与别人说话；</p>
-<p>27、每天做一件”分外事”；</p>
-<p>28、不关任何方面，每天必须至少做一次”进步一点点”，并且有意识的提高；</p>
-<p>29、每天提前15分上班，推迟30分下班；</p>
-<p>30、每天下班前5分钟做一下今天的整理工作；</p>
-<p>31、定期存钱；</p>
-<p>32、节俭；</p>
-<p>33、时常运用”头脑风暴”，利用脑力激荡提升自己创新能力；</p>
-<p>34、恪守诚信;</p>
-<p>35、学会原谅。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2005/03/05/《The-7-habits-of-highly-effective-people》读书笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Donne Hu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyDonne's Space">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2005/03/05/《The-7-habits-of-highly-effective-people》读书笔记/" itemprop="url">《The 7 habits of highly effective people》读书笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2005-03-05T11:06:10+08:00">
-                2005-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>《高效能人士的七个习惯》此书虽是为职业人看的，但作为学生，我认为也有很多值得学习的地方。下面是我读这本书的一些感想。</p>
-<h2 id="一、七个习惯的框架："><a href="#一、七个习惯的框架：" class="headerlink" title="一、七个习惯的框架："></a>一、七个习惯的框架：</h2><p>首先，本书提出了两个概念：情感帐户和思维模式。</p>
-<p>情感展户用作比喻人际关系中的信任程度，如同银行里的帐户，可供存款与提款。这个概念我觉得很形象，在文章的后面将具体写出我的感想。</p>
-<p>思维模式是每个人看待世界的方式，未必与现实相符。它是一份地图，而非领域本身，是由每个人的成长背景、经验及选择打造而成，我们会透过它来探测万事万物。</p>
-<p>其次提出了品德论，品德论强调圆满的生活与基本品德是不可分的。惟有修养自己具备品德，才能享受真正的成功与恒久的快乐。以品德为基石，技巧只是辅助性作用，这才是为人处事的首要准则。</p>
-<h2 id="二、习惯一：积极主动"><a href="#二、习惯一：积极主动" class="headerlink" title="二、习惯一：积极主动"></a>二、习惯一：积极主动</h2><p>消极被动的人易被自然环境所左右，在秋高气爽的时节里，兴高采烈；在阴霾晦暗的日子，就无精打采。积极主动的人，心中自有一片天地，天气的变化不会发生太大的作用，自身的原则、价值观才是关键。</p>
-<p>消极被动的人，同样也受制于社会“天气”的阴晴圆缺。如果受到礼遇，就愉快积极，反之则退缩逃避。心情好坏建立在他人的行为上，别人不成熟的人格反而是控制他们的利器。</p>
-<p>理智重于情感的人，则经过审慎思考，选定自己的原则、价值观，作为行为的原动力。他们与情感用事、沉溺于环境而无法自拔的人截然不同。</p>
-<p>在所有进步的社会中，爱都是代表动作，但消极被动的人却把爱当作一种感觉。好莱坞式的电影就经常灌输这种不必为爱负责的观念――因为爱只是感觉，没有感觉，便没有爱。事实上，任由感觉左右行为是不负责任的做法。（评：很多恋人分手，找不到其他更好的理由，就说是没有感觉了。负责任的做法，应该是说出真正想分手的原因，或者是发现对方的品性不好，或者是发觉两人相处不是很和谐，或者是其他的原因，而说没有爱的感觉了，那太不负责任了，你们是怎么开始的？还不是有了爱的感觉了才开始的！）</p>
-<p>积极主动的人往往以实际行动来表现爱。就像母亲忍受痛苦，把新生命带至人间，爱是牺牲奉献，不求回报。又好像父亲爱护子女，无微不至，爱必须通过行动来实现，爱的感觉由此而生。</p>
-<h2 id="三、习惯二：以终为始"><a href="#三、习惯二：以终为始" class="headerlink" title="三、习惯二：以终为始"></a>三、习惯二：以终为始</h2><p>主旨：有远大的理想，有自己的信条。</p>
-<p>太多人成功之后，反而感到空虚（当然我还没有这种感觉）；得到名利之后，却发现牺牲了更可贵的事务。因此，我们务必掌握真正需要的愿景，然后勇往直前坚持到底，使生活充满意义。</p>
-<p>我们可以列一张个人使命宣言，然后按照这个宣言来衡量自己的努力标准，衡量自己的信条，个人宣言可以如下：</p>
-<ol>
-<li><p>家庭第一</p>
-</li>
-<li><p>决不放弃诚信原则</p>
-</li>
-<li><p>未听取正反双方的意见，不妄下断言</p>
-</li>
-<li><p>征求他人的意见</p>
-</li>
-<li><p>保护不在场的人</p>
-</li>
-<li><p>诚恳但立场坚定</p>
-</li>
-<li><p>每年掌握一种新技能</p>
-</li>
-<li><p>今天计划明天的工作</p>
-</li>
-<li><p>抓紧等待的时间</p>
-</li>
-<li><p>态度积极，保持幽默</p>
-</li>
-<li><p>生活与工作有条不紊</p>
-</li>
-<li><p>别怕犯错――怕的是不能记取教训</p>
-</li>
-<li><p>协助属下成功</p>
-</li>
-<li><p>多请教别人</p>
-</li>
-<li><p>珍惜现在</p>
-</li>
-</ol>
-<h2 id="四、习惯三：要事第一"><a href="#四、习惯三：要事第一" class="headerlink" title="四、习惯三：要事第一"></a>四、习惯三：要事第一</h2><p>这一条很有用，可以为我们平时处理纷繁复杂的事情带来参考。</p>
-<p>事务分为四类：1、既重要又紧急的；2、重要但不紧急的；3、不重要但很紧急的；4、不重要又不紧急的。</p>
-<p>处理以上四种事务的要点是：我们要以第一类事务为主，第二类事务为辅（例如，写这份读书笔记就是属于第二类事务），抓紧时间处理的三类事务，至于第四类，则放到一边，不要管了。</p>
-<p>个人管理四步骤：这个提法很好，我们做事可以按照这四个步骤来进行，可以提高我们做事的效率。这四个步骤是：确定角色，选择目标，安排进度，逐日调整。</p>
-<p>这四个步骤可以以周为单位进行。</p>
-<p>首先，写下个人认为重要的角色。除了“个人”以外，父母、儿女、职员、老师。。。。。。凡是你愿意定期投入时间精力的，都可以纳入其中。</p>
-<p>其次，为每个角色制定未来一周欲达成的2至3个重要成就，列入目标栏中。</p>
-<p>然后，根据上面所列目标，安排未来7天的行程。这个过程中，可以把事情安排在自己可以预知的比较空闲的时段。这样以来后，我们会发现，一周之中，除了要处理的事务外，还有许多空余的时段，这些时段是为我们适时调整准备的。</p>
-<p>我们每天早晨依据行事历，安排一天的大小事务，若完不成，则可以调用时间表中那些空余的时段。</p>
-<p>这种做法可能有些太死板，但是我们可以变通一下，化繁为简，把所有事务按照重要、紧急两条原则，用1、2、3、、、、进行编号，然后一一执行下去，执行一个划去一个，当看到所有写下的事务一个一个被划去时，你是不是很有成就感？！</p>
-<h2 id="五、公众的成功"><a href="#五、公众的成功" class="headerlink" title="五、公众的成功"></a>五、公众的成功</h2><p>感情帐户：这个提法很好。</p>
-<p>让我们打个比方吧。偶尔与老同学相遇，即使多年未见，仍可立即重拾往日友谊，毫无生疏之感，那是因为过去积累的感情仍在。但经常接触的人就必须时时投资，否则突然间发生透支，会令人措手不及。</p>
-<p>恋人之间的交往很说明问题，两个人经常在一起，往往就容易发生矛盾。小时候生活在家中，日夜与父母相伴，有的时候就要耍些小脾气，和父母赌气；后来读大学了，离开了父母，才发现全天下只有他们对你最好了。这也很说明问题。</p>
-<p>所以，我们得珍惜眼前，好好地对待身边的每一个值得你善待的人。</p>
-<p>下面列举六种感情存款：</p>
-<ol>
-<li><p>理解别人</p>
-</li>
-<li><p>注意小节</p>
-</li>
-<li><p>信守诺言</p>
-</li>
-<li><p>阐明期望</p>
-</li>
-<li><p>诚恳正直</p>
-</li>
-<li><p>勇于道歉</p>
-</li>
-</ol>
-<p>一对一的人际关系。我们生活在一个拥有六十多亿人口的地球上，我们要面对数不清的人，怎么办？看看前联合国秘书长哈马舍尔德（Dag Hammarskjold）曾说过的一句发人深省的名言吧：为一个人完全奉献自己，胜过为拯救全世界而拼命。</p>
-<p>对，如果每个人都为一个到几个人奉献自己，那么世界会非常美好。对于个人来将，别人从你对一个人的爱中可以看出你对他们的爱。</p>
-<h2 id="六、习惯四：双赢思维"><a href="#六、习惯四：双赢思维" class="headerlink" title="六、习惯四：双赢思维"></a>六、习惯四：双赢思维</h2><p>关键：设身处地地为对方着想，写下你认为对方能接受的方法，再写下自己认可的办法。</p>
-<h2 id="七、习惯五、知己解己"><a href="#七、习惯五、知己解己" class="headerlink" title="七、习惯五、知己解己"></a>七、习惯五、知己解己</h2><p>首先寻求去了解对方，然后再争取让对方了解自己。</p>
-<p>心灵世界自有其理，非理智所能企及。――帕斯卡</p>
-<p>因此，试着去理解对方的心灵，并非浪费时间。</p>
-<p>想要有效交流与发挥影响力，第一步就得了解对方，取得信赖。这不能依靠权术，必须靠诚于中形于外的品德，也就是良善的本性，来感动别人。虚伪造作不要多久就会被揭穿。喜怒无常、表里不一、朝三暮四，也难以赢得尊重与信赖，或是水乳交融的沟通。</p>
-<p>据专家估计，人际沟通仅有1/10通过语言来进行，3成取决于语调与声音，其余6成则得靠肢体语言。因此，交流过程中，还是应该以感性为主的。</p>
-<p>古希腊人认为，人生以品格第一，情感居次，理性第三。表达自己就应该遵循这三个阶段。值得借鉴！</p>
-<h2 id="八、习惯六：统合综效"><a href="#八、习惯六：统合综效" class="headerlink" title="八、习惯六：统合综效"></a>八、习惯六：统合综效</h2><p>基本心态很重要：如果一位具有相当聪明才智的人跟我意见不同，那么对方的主张必定有我尚未体会的奥妙，值得加以了解。（心态很重要，以前总是很固执，很难接受别人的观点，总是认为自己是对的，现在有所改观，希望今后有所进步）应该尊重差异，尊重不同的声音。</p>
-<h2 id="九、习惯七：不断更新"><a href="#九、习惯七：不断更新" class="headerlink" title="九、习惯七：不断更新"></a>九、习惯七：不断更新</h2><p>更新有四个方面：身体，精神，心智，社会情感。</p>
-<p>身体方面：适当运动助健康。</p>
-<p>精神方面：当地心灵的尘埃。阅读，写作，听收音，听音乐，看电影，写日记等等都是不错的方法。</p>
-<p>心智方面：不要停止自我教育。活到老，学到老。</p>
-<p>社会情感方面：历练待人处事之道。</p>
-<p>两个人交往的原则（参考）：第一是“不细究”。一旦将自己易受伤害的部分展示出来，细究就带有侵犯性，易激起恐惧和怀疑。第二个规则是，如遇伤害过重感到痛苦的情形就停止交流，等感到痛苦的一方有足够的精神准备时再继续。</p>
-<p>我们传给孩子的永久性的遗产只有两件：一件是根，另一件是翅膀。</p>
-<p>以上把书里自己认为重要的东西总结了一下，单元自己以这些信条来时时激励自己和他人，让我们做有效率的人。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1125,7 +558,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1138,7 +571,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
