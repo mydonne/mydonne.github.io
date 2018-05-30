@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="添加硬盘在ubuntu系统断电（关机）状态下添加新硬盘；或在虚拟机软件中添加新的磁盘。 查看硬盘状况 sudo fdisk -l    注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等 使用fdisk命令分区，例如为/dev/sdb分区 sudo fdisk /dev/sdb  回车进入分区命令输入m查看fdisk分区工">
-<meta name="keywords" content="Linux">
+<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何在Ubuntu中挂载新的硬盘，分区，自动挂载以及设置权限">
-<meta property="og:url" content="http://yoursite.com/2018/05/19/mount-new-disk-on-ubuntu/index.html">
+<meta property="og:title" content="Hello World">
+<meta property="og:url" content="http://yoursite.com/2018/05/30/hello-world/index.html">
 <meta property="og:site_name" content="MyDonne&#39;s Space">
-<meta property="og:description" content="添加硬盘在ubuntu系统断电（关机）状态下添加新硬盘；或在虚拟机软件中添加新的磁盘。 查看硬盘状况 sudo fdisk -l    注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等 使用fdisk命令分区，例如为/dev/sdb分区 sudo fdisk /dev/sdb  回车进入分区命令输入m查看fdisk分区工">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-19T09:05:15.964Z">
+<meta property="og:updated_time" content="2018-05-13T15:34:10.554Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何在Ubuntu中挂载新的硬盘，分区，自动挂载以及设置权限">
-<meta name="twitter:description" content="添加硬盘在ubuntu系统断电（关机）状态下添加新硬盘；或在虚拟机软件中添加新的磁盘。 查看硬盘状况 sudo fdisk -l    注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等 使用fdisk命令分区，例如为/dev/sdb分区 sudo fdisk /dev/sdb  回车进入分区命令输入m查看fdisk分区工">
+<meta name="twitter:title" content="Hello World">
+<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/19/mount-new-disk-on-ubuntu/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/30/hello-world/"/>
 
 
 
 
 
-  <title>如何在Ubuntu中挂载新的硬盘，分区，自动挂载以及设置权限 | MyDonne's Space</title>
+  <title>Hello World | MyDonne's Space</title>
   
 
 
@@ -233,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/19/mount-new-disk-on-ubuntu/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/30/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Donne Hu">
@@ -250,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">如何在Ubuntu中挂载新的硬盘，分区，自动挂载以及设置权限</h1>
+          <h1 class="post-title" itemprop="name headline">Hello World</h1>
         
 
         <div class="post-meta">
@@ -262,8 +261,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-19T16:44:14+08:00">
-                2018-05-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-30T08:45:59+08:00">
+                2018-05-30
               </time>
             
 
@@ -300,54 +299,15 @@
       
 
       
-        <h1 id="添加硬盘"><a href="#添加硬盘" class="headerlink" title="添加硬盘"></a>添加硬盘</h1><p>在ubuntu系统断电（关机）状态下添加新硬盘；或在虚拟机软件中添加新的磁盘。</p>
-<h1 id="查看硬盘状况"><a href="#查看硬盘状况" class="headerlink" title="查看硬盘状况"></a>查看硬盘状况</h1><blockquote>
-<p>sudo fdisk -l  </p>
-</blockquote>
-<p>注意要添加sudo命令，否则查看不到硬盘信息。如果有多块硬盘就可以看到/dev/sda、/dev/sdb、/dev/sdc等等</p>
-<h1 id="使用fdisk命令分区，例如为-dev-sdb分区"><a href="#使用fdisk命令分区，例如为-dev-sdb分区" class="headerlink" title="使用fdisk命令分区，例如为/dev/sdb分区"></a>使用fdisk命令分区，例如为/dev/sdb分区</h1><blockquote>
-<p>sudo fdisk /dev/sdb</p>
-</blockquote>
-<p>回车进入分区命令<br>输入m查看fdisk分区工具选项<br>输入n开始分区<br>可以选择p（主分区）或e（扩展分区）等创建好扩展分区后就可以看到逻辑分区选项。根据提示输入盘符号（按提示的输入或直接回车），分区大小等信息。<br>可以多次执行n操作创建多个分区，创建好后输入w保存退出。<br>执行partprobe重新读取整个分区表。</p>
-<h1 id="格式化分区"><a href="#格式化分区" class="headerlink" title="格式化分区"></a>格式化分区</h1><blockquote>
-<p>sudo mkfs -t ext4 /dev/sdb1<br>注意不能格式化扩展分区</p>
-</blockquote>
-<h1 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h1><p>创建挂载点，就是新建一个目录</p>
-<blockquote>
-<p>mkdir ~/disk1<br>mkdir ~/disk2</p>
-</blockquote>
-<p>挂载</p>
-<blockquote>
-<p>sudo mount /dev/sdb1 ~/disk1<br>sudo mount /dev/sdb5 ~/disk2</p>
-</blockquote>
-<p>输入mount命令查看是否挂载成功，如果成功会看到如下信息<br><strong>/dev/sdb1 on /home/lgd/disk1 type ext4 (rw)</strong><br>也可以使用df命令查看是否挂载成功</p>
-<h1 id="自动挂载"><a href="#自动挂载" class="headerlink" title="自动挂载"></a>自动挂载</h1><p>修改/etc/fstab文件实现自动挂载，添加如下信息：  </p>
-<blockquote>
-<p>UUID=b543f8f7-579c-45b5-96d6-31de6fa1a55e /home/lgd/disk1 ext4 defaults 1 2  </p>
-</blockquote>
-<p>共6个字段分别代表</p>
-<ol>
-<li>分区设备文件名或UUID</li>
-<li>挂载点</li>
-<li>文件系统名称</li>
-<li>挂载参数，挂载权限</li>
-<li>指定分区是否被dump备份，0代表不备份，1代表每天备份，2代表不定期备份。</li>
-<li>指定分区是否被fsck检测，0代表不检测，其他数字代表检测的优先级，比如1的优先级比2高。根目录所在的分区的优先级为1，其他分区的优先级为大于或等于2  </li>
-</ol>
-<h3 id="以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入："><a href="#以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入：" class="headerlink" title="以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入："></a>以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入：</h3><blockquote>
-<p>sudo gedit /etc/fstab</p>
-</blockquote>
-<p>添加完信息保存后，执行命令：</p>
-<blockquote>
-<p>sudo mount -a</p>
-</blockquote>
-<p>如果没有报错就证明配制好了。</p>
-<p>修复由/etc/fstab文件配制错误引起的系统不能启动问题<br>启动后根据提示按 m 进入root命令行页面，更改/etc/fstab文件，然后重新启动。如果不能修改/etc/fstab文件，可能是根分区挂载权限问题，可使用 mount -o remount,rw / 重新挂载根分区，其中rw代表读写权限。修改好后，重启完成修复。</p>
-<h1 id="挂载完毕后的权限设置"><a href="#挂载完毕后的权限设置" class="headerlink" title="挂载完毕后的权限设置"></a>挂载完毕后的权限设置</h1><blockquote>
-<p>sudo chmod -R 777 ~/disk2</p>
-</blockquote>
-<p>作者：不喜欢吃鱼<br>链接：<a href="https://www.jianshu.com/p/ec5579ef15a6" target="_blank" rel="noopener">https://www.jianshu.com/p/ec5579ef15a6</a><br>來源：简书</p>
-<p>经过修订</p>
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
       
     </div>
@@ -363,12 +323,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
-          
-        </div>
-      
 
       
       
@@ -378,15 +332,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/05/24/gaofen-compitition-2018-2019/" rel="next" title="第二届中国高分杯乡村遥感大赛通知">
+                <i class="fa fa-chevron-left"></i> 第二届中国高分杯乡村遥感大赛通知
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/24/gaofen-compitition-2018-2019/" rel="prev" title="第二届中国高分杯乡村遥感大赛通知">
-                第二届中国高分杯乡村遥感大赛通知 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -509,7 +463,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#添加硬盘"><span class="nav-number">1.</span> <span class="nav-text">添加硬盘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看硬盘状况"><span class="nav-number">2.</span> <span class="nav-text">查看硬盘状况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用fdisk命令分区，例如为-dev-sdb分区"><span class="nav-number">3.</span> <span class="nav-text">使用fdisk命令分区，例如为/dev/sdb分区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#格式化分区"><span class="nav-number">4.</span> <span class="nav-text">格式化分区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#挂载"><span class="nav-number">5.</span> <span class="nav-text">挂载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自动挂载"><span class="nav-number">6.</span> <span class="nav-text">自动挂载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入："><span class="nav-number">6.0.1.</span> <span class="nav-text">以上可用gedit编辑，一般Ubuntu下非root权限，在Terminal中输入：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#挂载完毕后的权限设置"><span class="nav-number">7.</span> <span class="nav-text">挂载完毕后的权限设置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
             
 
           </div>
